@@ -79,7 +79,7 @@ def main_resnet32_mhana():
     # We will reduce the learning rate by 0.1 gamma
     # that's why we define our secheduler
     scheduler = optim.lr_scheduler.MultiStepLR(
-        optimizer, milestones=[20, 30], gamma=0.1)
+        optimizer, milestones=[20, 25], gamma=0.1)
 
         
     
