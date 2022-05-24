@@ -142,7 +142,7 @@ def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader,t
         print('Epoch: {}, Training Loss: {:.2f}, Validation Loss: {:.2f}, accuracy = {:.2f}'.format(epoch, training_loss,
         valid_loss, num_correct / num_examples))
 
-        #evalute the model on the test dataset 
-        evalute(model, test_loader, device, loss_fn)
+    #evalute the model on the test dataset 
+    evalute(model, test_loader, device, loss_fn)
     writer.flush()
 
