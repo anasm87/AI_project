@@ -8,7 +8,7 @@ from helper import *
 
 
 
-def train(model, optimizer,scheduler, loss_fn, train_loader, val_loader, writer , epochs=20, device="cpu",  path = MODEL_PATH):
+def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader, writer , epochs=20, device="cpu",  path = MODEL_PATH):
     
     
     start_epoch = 1

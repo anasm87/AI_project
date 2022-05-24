@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from module import *
 from train import *
 from helper import *
+import os
 
 #setup tensor board 
 from torch.utils.tensorboard import SummaryWriter
@@ -80,12 +81,8 @@ def main_resnet32_mhana():
     scheduler = optim.lr_scheduler.MultiStepLR(
         optimizer, milestones=[30, 50, 70], gamma=0.1)
 
+        
     
-
-    # train our module
-    train(resnetm32, optimizer,scheduler,torch.nn.CrossEntropyLoss(), trainloader, testloader,writer= writer, epochs=90,
+     
+    train_module(resnetm32, optimizer,scheduler,torch.nn.CrossEntropyLoss(), trainloader, testloader,writer= writer, epochs=90,
         device=device, path = MODEL_PATH )
-
-
-if __name__ =='__main__':
-    main_resnet32_mhana()

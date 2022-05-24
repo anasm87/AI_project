@@ -5,7 +5,8 @@ import random
 import torch
 import torchvision
 import torchvision.transforms as transforms
- 
+import os
+
 #data and models path 
 CIFAR10_DATA_PATH= './../data'
 MODEL_PATH='./../models'
