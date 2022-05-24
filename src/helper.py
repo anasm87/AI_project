@@ -5,6 +5,7 @@ import random
 import torch
 import torchvision
 import torchvision.transforms as transforms
+import torch.nn.functional as F
 import os
 
 #data and models path 
@@ -48,7 +49,7 @@ def plot_classes_preds(net, images, labels):
     '''
     preds, probs = images_to_probs(net, images)
     # plot the images in the batch, along with predicted and true labels
-    fig = plt.figure(figsize=(12, 48))
+    fig = plt.figure(figsize=(12, 12))
     for idx in np.arange(4):
         ax = fig.add_subplot(1, 4, idx+1, xticks=[], yticks=[])
         matplotlib_imshow(images[idx], one_channel=True)

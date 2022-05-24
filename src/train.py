@@ -8,7 +8,28 @@ from helper import *
 
 
 
-def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader, writer , epochs=20, device="cpu",  path = MODEL_PATH):
+def evalute(model, test_loader, device, loss_fn):
+      
+    #set up model on evaluation mode
+    model.eval()
+    num_correct = 0 
+    num_examples = 0
+    for i,batch in enumerate(test_loader):
+        inputs, targets = batch
+        inputs = inputs.to(device)
+        output = model(inputs)
+        targets = targets.to(device)
+        loss = loss_fn(output,targets)  
+        correct = torch.eq(torch.max(F.softmax(output, dim=1), dim=1)[1], targets).view(-1)
+        num_correct += torch.sum(correct).item()
+        num_examples += correct.shape[0]
+
+
+
+    print('accuracy on the test dataset = {:.2f}'.format(num_correct / num_examples))
+    
+
+def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader,test_loader, writer , epochs=20, device="cpu",  path = MODEL_PATH):
     
     
     start_epoch = 1
@@ -29,6 +50,7 @@ def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader, 
       for k, v in state.items():
           if isinstance(v, torch.Tensor):
               state[k] = v.to(device)
+   
 
     for epoch in range(start_epoch, epochs+1):
         
@@ -119,5 +141,8 @@ def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader, 
     
         print('Epoch: {}, Training Loss: {:.2f}, Validation Loss: {:.2f}, accuracy = {:.2f}'.format(epoch, training_loss,
         valid_loss, num_correct / num_examples))
+
+        #evalute the model on the test dataset 
+        evalute(model, test_loader, device, loss_fn)
     writer.flush()
-    writer.close()
+

@@ -61,8 +61,8 @@ def main_resnet32_mhana():
     testset = torchvision.datasets.CIFAR10(root=CIFAR10_DATA_PATH, train=False,download=True, transform=test_transform)
 
     #data loaders for every set
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True, drop_last=True, pin_memory=True, num_workers=4)
-    val_loader = torch.utils.data.DataLoader(val_set, batch_size=128, shuffle=False, drop_last=False, num_workers=4)
+    trainloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True, drop_last=True, pin_memory=True, num_workers=4)
+    valloader = torch.utils.data.DataLoader(val_set, batch_size=128, shuffle=False, drop_last=False, num_workers=4)
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size, shuffle=False, drop_last=False, num_workers=4)
 
 
@@ -79,13 +79,16 @@ def main_resnet32_mhana():
     # We will reduce the learning rate by 0.1 gamma
     # that's why we define our secheduler
     scheduler = optim.lr_scheduler.MultiStepLR(
-        optimizer, milestones=[30, 50, 70], gamma=0.1)
+        optimizer, milestones=[20, 30], gamma=0.1)
 
         
     
      
-    train_module(resnetm32, optimizer,scheduler,torch.nn.CrossEntropyLoss(), trainloader, testloader,writer= writer, epochs=90,
+    train_module(resnetm32, optimizer,scheduler,torch.nn.CrossEntropyLoss(), trainloader, valloader, testloader,writer= writer, epochs=40,
         device=device, path = MODEL_PATH )
+
+    writer.flush()
+    writer.close()
 
 if __name__=='__main__':
     main_resnet32_mhana()
