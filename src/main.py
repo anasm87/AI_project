@@ -14,7 +14,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 def main_resnet32_mhana():
     # log_dir is "runs" where we log valication loss, training loss and accuracy
-    writer = SummaryWriter('runs')
+    writer = SummaryWriter('./../runs')
 
 
 
