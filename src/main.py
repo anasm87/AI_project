@@ -86,3 +86,6 @@ def main_resnet32_mhana():
      
     train_module(resnetm32, optimizer,scheduler,torch.nn.CrossEntropyLoss(), trainloader, testloader,writer= writer, epochs=90,
         device=device, path = MODEL_PATH )
+
+if __name__=='__main__':
+    main_resnet32_mhana()
