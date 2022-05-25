@@ -9,6 +9,8 @@ from helper import *
 import os
 #setup tensor board 
 from torch.utils.tensorboard import SummaryWriter
+from datetime import datetime
+
 
 # functions to show an image
 
@@ -87,6 +89,7 @@ def predict_samples():
     dataiter = iter(testloader)
 
     #randomly go in the test dataset
+    random.seed(datetime.now())
     x = random.randint(1,len(testloader))
     for i in range(x):
       dataiter.next()
