@@ -1,6 +1,6 @@
 
 #import libraries
-
+import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from module import *
@@ -13,16 +13,21 @@ from torch.utils.tensorboard import SummaryWriter
 # functions to show an image
 
 
+# helper function to un-normalize and display an image
 def imshow(img):
     img = img / 2 + 0.5     # unnormalize
-    npimg = img.numpy()
+    npimg = img.cpu().data.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
-    plt.show()
-
 
 
 def predict_samples():
 
+    # seeding
+    set_seed(42)
+
+    # Ensure that all operations are deterministic on GPU (if used) for reproducibility
+    torch.backends.cudnn.determinstic = True
+    torch.backends.cudnn.benchmark = False
 
     # configure device to gpu if it exists
     if torch.cuda.is_available():
@@ -42,7 +47,7 @@ def predict_samples():
                                         ])
 
     #batch size 
-    batch_size = 4
+    batch_size = 20
 
 
     #test set 
@@ -87,16 +92,23 @@ def predict_samples():
       dataiter.next()
 
     images, labels = dataiter.next()
+    images=images.to(device)
+    labels=labels.to(device)
     preds, probs = images_to_probs(model, images)
 
-    fig = plot_classes_preds(model, images, labels)
-    fig.savefig('random_samples_predictions.jpg')
-    img_grid = torchvision.utils.make_grid(images)
 
-    fig1, ax1 =  plt.subplots()
-    ax1.imshow(img_grid.permute(1, 2, 0))
-    fig1.savefig('random_samples_image_grid.jpg')
-
+    # plot the images in the batch, along with the corresponding labels
+    fig2 = plt.figure(figsize=(25, 6))
+    # display 4 images
+    for idx in np.arange(20):
+        ax = fig2.add_subplot(2, 20/2, idx+1, xticks=[], yticks=[])
+        imshow(images[idx])
+        ax.set_title("{0}, {1:.1f}%\n(label: {2})".format(
+            classes[preds[idx]],
+            probs[idx] * 100.0,
+            classes[labels[idx]]),
+                    color=("green" if preds[idx]==labels[idx].item() else "red"))
+    fig2.savefig('random_samples_images_clear.jpg')
 
 
 if __name__=='__main__':
