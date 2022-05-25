@@ -58,6 +58,7 @@ def plot_classes_preds(net, images, labels):
             probs[idx] * 100.0,
             classes[labels[idx]]),
                     color=("green" if preds[idx]==labels[idx].item() else "red"))
+ 
     return fig
 
 
