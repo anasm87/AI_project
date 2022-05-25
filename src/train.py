@@ -81,13 +81,6 @@ def train_module(model, optimizer,scheduler, loss_fn, train_loader, val_loader,t
             #accumlate the training loss
             training_loss += loss.data.item() * inputs.size(0)
             
-            #logginh training loss
-            if i % 1000 == 999:    # every 1000 mini-batches...
-                # ...log a Matplotlib Figure showing the model's predictions on a
-                # random mini-batch
-                writer.add_figure('predictions vs. actuals',
-                                plot_classes_preds(model, inputs, targets),
-                                global_step=epoch * len(train_loader) + i)
         
 
         scheduler.step()
