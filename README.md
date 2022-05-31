@@ -27,5 +27,5 @@ the best model will be stored in models folder under the name resnet32_Mhana_cif
 `python inference.py --sample_path './../sample.jpeg'`
  
  ## Trained models
-You can find the fully trained models on CIFAR10 in this link
+You can find the fully trained models which I have trained on CIFAR10 in this link
 https://drive.google.com/drive/folders/1dzcB8KHD1y6DUzrTyzBRe-vKO6sVFtqG?usp=sharing
