@@ -28,11 +28,6 @@ def matplotlib_imshow(img, one_channel=False):
 
 
 def images_to_probs(net, images):
-    '''
-    Generates predictions and corresponding probabilities from a trained
-    network and a list of images
-    '''
-
     output = net(images)
     # convert output probabilities to predicted class
     _, preds_tensor = torch.max(output, 1)
@@ -41,13 +36,7 @@ def images_to_probs(net, images):
 
 
 def plot_classes_preds(net, images, labels):
-    '''
-    Generates matplotlib Figure using a trained network, along with images
-    and labels from a batch, that shows the network's top prediction along
-    with its probability, alongside the actual label, coloring this
-    information based on whether the prediction was correct or not.
-    Uses the "images_to_probs" function.
-    '''
+
     preds, probs = images_to_probs(net, images)
     # plot the images in the batch, along with predicted and true labels
     fig = plt.figure(figsize=(16, 4))
@@ -66,9 +55,15 @@ def plot_classes_preds(net, images, labels):
 def load_checkpoint(model, optimizer,scheduler, losslogger, filename='checkpoint.pth.tar'):
     # Note: Input model & optimizer should be pre-defined.  This routine only updates their states.
     start_epoch = 0
+        # configure device to gpu if it exists
+    if torch.cuda.is_available():
+        device = torch.device("cuda") 
+    else:
+        device = torch.device("cpu")
+        
     if os.path.isfile(filename):
         print("=> loading checkpoint '{}'".format(filename))
-        checkpoint = torch.load(filename)
+        checkpoint = torch.load(filename, map_location=device)
         start_epoch = checkpoint['epoch']
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer'])

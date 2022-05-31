@@ -16,14 +16,17 @@ after following the commands in setup(ps for windows, sh for linux)
 To run the code:
 
 - training your model resnet32 from scratch
+`cd ./src`
 `python main.py`
 
 the best model will be stored in models folder under the name resnet32_Mhana_cifar_bestmodel.pt
 
 - to test the model on a random group of images in the test set
+`cd ./src`
 `python predict_random_samples.py`
 
 - to inference only for one image:
+`cd ./src`
 `python inference.py --sample_path './../sample.jpeg'`
  
  ## Trained models

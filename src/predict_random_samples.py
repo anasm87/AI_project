@@ -1,3 +1,6 @@
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 
 #import libraries
 import torch
@@ -8,7 +11,6 @@ from train import *
 from helper import *
 import os
 #setup tensor board 
-from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
 
 
@@ -24,12 +26,7 @@ def imshow(img):
 
 def predict_samples():
 
-    # seeding
-    set_seed(42)
 
-    # Ensure that all operations are deterministic on GPU (if used) for reproducibility
-    torch.backends.cudnn.determinstic = True
-    torch.backends.cudnn.benchmark = False
 
     # configure device to gpu if it exists
     if torch.cuda.is_available():
@@ -104,7 +101,7 @@ def predict_samples():
     fig2 = plt.figure(figsize=(25, 6))
     # display 4 images
     for idx in np.arange(20):
-        ax = fig2.add_subplot(2, 20/2, idx+1, xticks=[], yticks=[])
+        ax = fig2.add_subplot(2, 10, idx+1, xticks=[], yticks=[])
         imshow(images[idx])
         ax.set_title("{0}, {1:.1f}%\n(label: {2})".format(
             classes[preds[idx]],
