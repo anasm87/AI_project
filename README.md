@@ -28,4 +28,4 @@ the best model will be stored in models folder under the name resnet32_Mhana_cif
  
  ## Trained models
 You can find the fully trained models on CIFAR10 in this link
-
+https://drive.google.com/drive/folders/1dzcB8KHD1y6DUzrTyzBRe-vKO6sVFtqG?usp=sharing
