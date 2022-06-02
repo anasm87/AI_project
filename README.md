@@ -32,3 +32,14 @@ the best model will be stored in models folder under the name resnet32_Mhana_cif
  ## Trained models
 You can find the fully trained models which I have trained on CIFAR10 in this link
 https://drive.google.com/drive/folders/1dzcB8KHD1y6DUzrTyzBRe-vKO6sVFtqG?usp=sharing
+
+
+ ## deployment
+The best training model has been deployed as back end service on Heroku:
+https://deeplearning-ai-project.herokuapp.com/
+
+example how to use it with GET request:
+https://deeplearning-ai-project.herokuapp.com/predict?imageURL=https://upload.wikimedia.org/wikipedia/commons/c/c9/Cat.jpeg
+
+and a frontend app has been develop it to use the model in this link:
+https://ai-project-frontend-h1j1co68j-anasm87.vercel.app/
